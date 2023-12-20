@@ -24,10 +24,7 @@ class test_basemodel(unittest.TestCase):
 
     def tearDown(self):
         """Tearign down"""
-        try:
-            os.remove('file.json')
-        except:
-            pass
+        os.remove('file.json')
 
     def test_default(self):
         """Testing default"""

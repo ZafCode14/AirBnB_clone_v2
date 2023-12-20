@@ -19,10 +19,7 @@ class test_fileStorage(unittest.TestCase):
 
     def tearDown(self):
         """ Remove storage file at end of tests """
-        try:
-            os.remove('file.json')
-        except:
-            pass
+        os.remove('file.json')
 
     @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") != 'db', 'Not file engine')
     def test_obj_list_empty(self):

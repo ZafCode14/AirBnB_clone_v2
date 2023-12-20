@@ -7,6 +7,7 @@ from io import StringIO
 from console import HBNBCommand
 from models import storage
 
+
 class TestConsole(unittest.TestCase):
     """Class with tests"""
     @unittest.skipIf(
@@ -18,7 +19,6 @@ class TestConsole(unittest.TestCase):
             HBNBCommand().onecmd('create User name="Mike" age=23 height=2.1')
             output = f.getvalue().strip()
             self.assertIn("User.{}".format(output), storage.all().keys())
-            
             user_id = "User.{}".format(output)
             created_user = storage.all()[user_id]
             self.assertEqual(created_user.name, "Mike")
