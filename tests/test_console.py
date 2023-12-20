@@ -6,10 +6,28 @@ import os
 from io import StringIO
 from console import HBNBCommand
 from models import storage
+import pep8
 
 
 class TestConsole(unittest.TestCase):
     """Class with tests"""
+
+    @classmethod
+    def setUpClass(cls):
+        """Setting up"""
+        cls.consol = HBNBCommand()
+
+    @classmethod
+    def teardown(cls):
+        """Tearing down"""
+        del cls.consol
+
+    def test_pep8(self):
+        """Test Pep8 styling."""
+        style = pep8.StyleGuide(quiet=True)
+        p = style.check_files(["console.py"])
+        self.assertEqual(p.total_errors, 0, "fix Pep8")
+
     @unittest.skipIf(
         os.getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage test')
     def test_fs_create(self):
@@ -24,3 +42,19 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(created_user.name, "Mike")
             self.assertEqual(created_user.age, 23)
             self.assertEqual(created_user.height, 2.1)
+
+    def test_docstrings(self):
+        """Testing docstring"""
+        self.assertIsNotNone(HBNBCommand.__doc__)
+        self.assertIsNotNone(HBNBCommand.emptyline.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_quit.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_EOF.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_create.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_show.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_destroy.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_all.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_update.__doc__)
+        self.assertIsNotNone(HBNBCommand.do_count.__doc__)
+
+if __name__ == "__main__":
+    unittest.main()
