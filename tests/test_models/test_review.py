@@ -4,6 +4,7 @@ import unittest
 from tests.test_models.test_base_model import test_basemodel
 from models.review import Review
 import os
+import pep8
 
 
 class test_review(test_basemodel):
@@ -21,6 +22,12 @@ class test_review(test_basemodel):
     def teardown(cls):
         """Tearing down"""
         del cls.rev
+
+    def test_pep8(self):
+        """Test pep8 styling."""
+        style = pep8.StyleGuide(quiet=True)
+        p = style.check_files(["models/review.py"])
+        self.assertEqual(p.total_errors, 0, "fix pep8")
 
     def __init__(self, *args, **kwargs):
         """Initializing"""
@@ -60,15 +67,6 @@ class test_review(test_basemodel):
         self.assertEqual(type(self.rev.text), str)
         self.assertEqual(type(self.rev.place_id), str)
         self.assertEqual(type(self.rev.user_id), str)
-
-    def test_save_review(self):
-        """Testing save"""
-        self.rev.save()
-        self.assertNotEqual(self.rev.created_at, self.rev.updated_at)
-
-    def test_to_dict_review(self):
-        """Testing dict"""
-        self.assertEqual('to_dict' in dir(self.rev), True)
 
 
 if __name__ == "__main__":

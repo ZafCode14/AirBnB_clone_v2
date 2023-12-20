@@ -4,6 +4,7 @@ import unittest
 from models.base_model import BaseModel
 from models import storage
 import os
+import pep8
 
 
 class test_fileStorage(unittest.TestCase):
@@ -20,6 +21,12 @@ class test_fileStorage(unittest.TestCase):
     def tearDown(self):
         """ Remove storage file at end of tests """
         os.remove('file.json')
+
+    def test_pep8_FileStorage(self):
+        """Test pep8 styling."""
+        style = pep8.StyleGuide(quiet=True)
+        p = style.check_files(['models/engine/file_storage.py'])
+        self.assertEqual(p.total_errors, 0, "fix pep8")
 
     @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") != 'db', 'Not file engine')
     def test_obj_list_empty(self):

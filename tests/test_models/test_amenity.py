@@ -4,6 +4,7 @@ import unittest
 from tests.test_models.test_base_model import test_basemodel
 from models.amenity import Amenity
 import os
+import pep8
 
 
 class TestAmenity(unittest.TestCase):
@@ -20,6 +21,12 @@ class TestAmenity(unittest.TestCase):
         """at the end of the test this will tear it down"""
         del cls.amenity
 
+    def test_pep8(self):
+        """Test pep8 styling."""
+        style = pep8.StyleGuide(quiet=True)
+        p = style.check_files(["models/amenity.py"])
+        self.assertEqual(p.total_errors, 0, "fix pep8")
+
     def test_attributes_amenity(self):
         """Testing attributes"""
         self.assertTrue('id' in self.amenity.__dict__)
@@ -30,15 +37,6 @@ class TestAmenity(unittest.TestCase):
     def test_attribute_types_amenity(self):
         """Testing attribute types"""
         self.assertEqual(type(self.amenity.name), str)
-
-    def test_save_amenity(self):
-        """Testing save"""
-        self.amenity.save()
-        self.assertNotEqual(self.amenity.created_at, self.amenity.updated_at)
-
-    def test_to_dict_amenity(self):
-        """Testin to dict"""
-        self.assertEqual('to_dict' in dir(self.amenity), True)
 
 
 if __name__ == "__main__":

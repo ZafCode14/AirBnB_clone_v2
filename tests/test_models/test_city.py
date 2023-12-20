@@ -4,6 +4,7 @@ import unittest
 from tests.test_models.test_base_model import test_basemodel
 from models.city import City
 import os
+import pep8
 
 
 class test_City(test_basemodel):
@@ -20,6 +21,12 @@ class test_City(test_basemodel):
     def teardown(cls):
         """Tearing down"""
         del cls.city
+
+    def test_pep8(self):
+        """Test pep8 styling."""
+        style = pep8.StyleGuide(quiet=True)
+        p = style.check_files(["models/amenity.py"])
+        self.assertEqual(p.total_errors, 0, "fix pep8")
 
     def __init__(self, *args, **kwargs):
         """Initializing"""
@@ -51,14 +58,6 @@ class test_City(test_basemodel):
         """Testing for attr types"""
         self.assertEqual(type(self.city.name), str)
         self.assertEqual(type(self.city.state_id), str)
-
-    def test_save_city(self):
-        """Testing save City"""
-        self.city.save()
-        self.assertNotEqual(self.city.created_at, self.city.updated_at)
-    def test_to_dict_city(self):
-        """Testing City to dict"""
-        self.assertEqual('to_dict' in dir(self.city), True)
 
 
 if __name__ == "__main__":

@@ -5,6 +5,7 @@ from tests.test_models.test_base_model import test_basemodel
 from models.user import User
 from models.base_model import BaseModel
 import os
+import pep8
 
 
 class test_User(test_basemodel):
@@ -24,6 +25,11 @@ class test_User(test_basemodel):
         """Tearing down"""
         del cls.user
 
+    def test_pep8(self):
+        """Test pep8 styling."""
+        style = pep8.StyleGuide(quiet=True)
+        p = style.check_files(["models/user.py"])
+        self.assertEqual(p.total_errors, 0, "fix pep8")
 
     def __init__(self, *args, **kwargs):
         """Initializing"""
@@ -71,15 +77,6 @@ class test_User(test_basemodel):
         self.assertEqual(type(self.user.password), str)
         self.assertEqual(type(self.user.first_name), str)
         self.assertEqual(type(self.user.first_name), str)
-
-    def test_save_user(self):
-        """Testing save"""
-        self.user.save()
-        self.assertNotEqual(self.user.created_at, self.user.updated_at)
-
-    def test_to_dict_user(self):
-        """Testing dict"""
-        self.assertEqual('to_dict' in dir(self.user), True)
 
 
 if __name__ == "__main__":

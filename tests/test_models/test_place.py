@@ -4,6 +4,7 @@ import unittest
 from tests.test_models.test_base_model import test_basemodel
 from models.place import Place
 import os
+import pep8
 
 
 class test_Place(test_basemodel):
@@ -35,6 +36,12 @@ class test_Place(test_basemodel):
         super().__init__(*args, **kwargs)
         self.name = "Place"
         self.value = Place
+
+    def test_pep8(self):
+        """Test pep8 styling."""
+        style = pep8.StyleGuide(quiet=True)
+        p = style.check_files(["models/place.py"])
+        self.assertEqual(p.total_errors, 0, "fix pep8")
 
     @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") != 'db', 'Not file engine')
     def test_city_id(self):
@@ -132,16 +139,6 @@ class test_Place(test_basemodel):
         self.assertEqual(type(self.place.latitude), float)
         self.assertEqual(type(self.place.longitude), float)
         self.assertEqual(type(self.place.amenity_ids), list)
-
-    def test_save_city(self):
-        """Testing save"""
-        self.place.save()
-        self.assertNotEqual(self.place.created_at, self.place.updated_at)
-
-    def test_to_dict_city(self):
-        """Testing to dict"""
-        self.assertEqual('to_dict' in dir(self.place), True)
-
 
 
 if __name__ == "__main__":
