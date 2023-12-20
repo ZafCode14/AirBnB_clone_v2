@@ -18,14 +18,6 @@ class test_basemodel(unittest.TestCase):
         self.name = 'BaseModel'
         self.value = BaseModel
 
-    def setUp(self):
-        """Setting up"""
-        pass
-
-    def tearDown(self):
-        """Tearign down"""
-        os.remove('file.json')
-
     def test_default(self):
         """Testing default"""
         i = self.value()
