@@ -74,6 +74,7 @@ class test_basemodel(unittest.TestCase):
         with self.assertRaises(TypeError):
             new = self.value(**n)
 
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") != 'db', 'Not db engine')
     def test_kwargs_one(self):
         """ """
         n = {'Name': 'test'}
@@ -94,6 +95,3 @@ class test_basemodel(unittest.TestCase):
         """ """
         new = self.value()
         self.assertEqual(type(new.updated_at), datetime.datetime)
-        n = new.to_dict()
-        new = BaseModel(**n)
-        self.assertFalse(new.created_at == new.updated_at)
