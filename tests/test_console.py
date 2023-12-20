@@ -12,8 +12,7 @@ class TestConsole(unittest.TestCase):
     @unittest.skipIf(
         os.getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage test')
     def test_fs_create(self):
-        """Tests the create command with the file storage.
-        """
+        """Tests the create command with the file storage.  """
 
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd('create User name="Mike" age=23 height=2.1')
