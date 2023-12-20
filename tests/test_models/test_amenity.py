@@ -20,13 +20,6 @@ class TestAmenity(unittest.TestCase):
         """at the end of the test this will tear it down"""
         del cls.amenity
 
-    def tearDown(self):
-        """teardown"""
-        try:
-            os.remove("file.json")
-        except Exception:
-            pass
-
     def test_attributes_amenity(self):
         """Testing attributes"""
         self.assertTrue('id' in self.amenity.__dict__)

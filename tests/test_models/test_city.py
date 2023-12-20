@@ -9,6 +9,18 @@ import os
 class test_City(test_basemodel):
     """Class with tests"""
 
+    @classmethod
+    def setUpClass(cls):
+        """Setting up"""
+        cls.city = City()
+        cls.city.name = "City Name"
+        cls.city.state_id = "State Name"
+
+    @classmethod
+    def teardown(cls):
+        """Tearing down"""
+        del cls.city
+
     def __init__(self, *args, **kwargs):
         """Initializing"""
         super().__init__(*args, **kwargs)
@@ -26,6 +38,27 @@ class test_City(test_basemodel):
         """Testign name"""
         new = self.value()
         self.assertEqual(type(new.name), str)
+    
+    def test_attributes_city(self):
+        """Testing for attributes"""
+        self.assertTrue('id' in self.city.__dict__)
+        self.assertTrue('created_at' in self.city.__dict__)
+        self.assertTrue('updated_at' in self.city.__dict__)
+        self.assertTrue('state_id' in self.city.__dict__)
+        self.assertTrue('name' in self.city.__dict__)
+
+    def test_attribute_types_city(self):
+        """Testing for attr types"""
+        self.assertEqual(type(self.city.name), str)
+        self.assertEqual(type(self.city.state_id), str)
+
+    def test_save_city(self):
+        """Testing save City"""
+        self.city.save()
+        self.assertNotEqual(self.city.created_at, self.city.updated_at)
+    def test_to_dict_city(self):
+        """Testing City to dict"""
+        self.assertEqual('to_dict' in dir(self.city), True)
 
 
 if __name__ == "__main__":

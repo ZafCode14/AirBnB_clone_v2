@@ -9,6 +9,19 @@ import os
 class test_review(test_basemodel):
     """Class with tests"""
 
+    @classmethod
+    def setUpClass(cls):
+        """Setting up"""
+        cls.rev = Review()
+        cls.rev.place_id = "4321-dcba"
+        cls.rev.user_id = "123-bca"
+        cls.rev.text = "The srongest in the Galaxy"
+
+    @classmethod
+    def teardown(cls):
+        """Tearing down"""
+        del cls.rev
+
     def __init__(self, *args, **kwargs):
         """Initializing"""
         super().__init__(*args, **kwargs)
@@ -32,6 +45,30 @@ class test_review(test_basemodel):
         """Testing text"""
         new = self.value()
         self.assertEqual(type(new.text), str)
+
+    def test_attributes_review(self):
+        """Testing attributes"""
+        self.assertTrue('id' in self.rev.__dict__)
+        self.assertTrue('created_at' in self.rev.__dict__)
+        self.assertTrue('updated_at' in self.rev.__dict__)
+        self.assertTrue('place_id' in self.rev.__dict__)
+        self.assertTrue('text' in self.rev.__dict__)
+        self.assertTrue('user_id' in self.rev.__dict__)
+
+    def test_attribute_types_review(self):
+        """Testing types of attr"""
+        self.assertEqual(type(self.rev.text), str)
+        self.assertEqual(type(self.rev.place_id), str)
+        self.assertEqual(type(self.rev.user_id), str)
+
+    def test_save_review(self):
+        """Testing save"""
+        self.rev.save()
+        self.assertNotEqual(self.rev.created_at, self.rev.updated_at)
+
+    def test_to_dict_review(self):
+        """Testing dict"""
+        self.assertEqual('to_dict' in dir(self.rev), True)
 
 
 if __name__ == "__main__":
