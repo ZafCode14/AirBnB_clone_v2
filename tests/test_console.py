@@ -56,5 +56,6 @@ class TestConsole(unittest.TestCase):
         self.assertIsNotNone(HBNBCommand.do_update.__doc__)
         self.assertIsNotNone(HBNBCommand.do_count.__doc__)
 
+
 if __name__ == "__main__":
     unittest.main()
