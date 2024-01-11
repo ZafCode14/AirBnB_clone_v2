@@ -22,6 +22,10 @@ file { '/data/web_static/current':
   target  => '/data/web_static/releases/test',
 }
 
+exec { 'chown -R ubuntu:ubuntu /data/':
+  path => '/usr/bin/:/usr/local/bin/:/bin/'
+}
+
 # Update Nginx configuration
 exec { 'hbnb_static':
   command	=> "sed -i '57i\\n\tlocation \/hbnb_static {\n\t\talias /data/web_static/current/;\n\t}' /etc/nginx/sites-available/default",
@@ -32,4 +36,7 @@ exec { 'hbnb_static':
 service { 'nginx':
   ensure  => running,
   require => Package['nginx'],
+}
+
+exec {'/etc/init.d/nginx restart':
 }
