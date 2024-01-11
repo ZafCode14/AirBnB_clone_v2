@@ -3,6 +3,7 @@
 from datetime import datetime
 from fabric.api import put, run, local, env
 from os.path import isdir, exists
+from sys import argv
 env.hosts = ["3.95.32.69", "54.144.129.181"]
 
 
@@ -41,11 +42,9 @@ def do_deploy(archive_path):
         return False
 
 
-archive_path = do_pack()
-
-
 def deploy():
     """Method that creates and distributes an archive to servers"""
+    archive_path = do_pack()
     if archive_path is None:
         return False
     return do_deploy(archive_path)
