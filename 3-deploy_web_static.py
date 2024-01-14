@@ -46,15 +46,6 @@ def do_deploy(archive_path):
 
 
 archive_path = do_pack()
-file_name = archive_path.split("/")[-1]
-tar_name = file_name.split(".")[0]
-path = "/data/web_static/releases/"
-local('sudo mkdir -p {}{}/'.format(path, tar_name))
-local('sudo tar -xzf {} -C {}{}'.format(archive_path, path, tar_name))
-local('sudo mv {0}{1}/web_static/* {0}{1}'.format(path, tar_name))
-local('sudo rm -rf {}{}/web_static/'.format(path, tar_name))
-local('sudo rm -rf /data/web_static/current')
-local('sudo ln -s {}{}/ /data/web_static/current'.format(path, tar_name))
 
 
 def deploy():
