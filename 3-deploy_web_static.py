@@ -4,6 +4,7 @@ from datetime import datetime
 from fabric.api import put, run, local, env
 from os.path import isdir, exists
 from sys import argv
+
 env.hosts = ["3.95.32.69", "54.144.129.181"]
 env.user = "ubuntu"
 env.key_filename = "~/.ssh/school"
@@ -28,16 +29,16 @@ def do_deploy(archive_path):
         return False
     try:
         file_name = archive_path.split("/")[-1]
-        date_time = file_name.split(".")[0]
+        tar_name = file_name.split(".")[0]
         path = "/data/web_static/releases/"
         put(archive_path, '/tmp/')
-        run('mkdir -p {}{}/'.format(path, date_time))
-        run('tar -xzf /tmp/{} -C {}{}'.format(file_name, path, date_time))
+        run('mkdir -p {}{}/'.format(path, tar_name))
+        run('tar -xzf /tmp/{} -C {}{}'.format(file_name, path, tar_name))
         run('rm /tmp/{}'.format(file_name))
-        run('mv {0}{1}/web_static/* {0}{1}'.format(path, date_time))
-        run('rm -rf {}{}/web_static/'.format(path, date_time))
+        run('mv {0}{1}/web_static/* {0}{1}'.format(path, tar_name))
+        run('rm -rf {}{}/web_static/'.format(path, tar_name))
         run('rm -rf /data/web_static/current')
-        run('ln -s {}{}/ /data/web_static/current'.format(path, date_time))
+        run('ln -s {}{}/ /data/web_static/current'.format(path, tar_name))
         print("New version deployed!")
         return True
     except Exception:
@@ -45,6 +46,15 @@ def do_deploy(archive_path):
 
 
 archive_path = do_pack()
+file_name = archive_path.split("/")[-1]
+tar_name = file_name.split(".")[0]
+path = "/data/web_static/releases/"
+local('sudo mkdir -p {}{}/'.format(path, tar_name))
+local('sudo tar -xzf {} -C {}{}'.format(archive_path, path, tar_name))
+local('sudo mv {0}{1}/web_static/* {0}{1}'.format(path, tar_name))
+local('sudo rm -rf {}{}/web_static/'.format(path, tar_name))
+local('sudo rm -rf /data/web_static/current')
+local('sudo ln -s {}{}/ /data/web_static/current'.format(path, tar_name))
 
 
 def deploy():
