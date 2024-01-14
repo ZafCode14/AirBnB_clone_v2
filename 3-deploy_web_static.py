@@ -44,11 +44,9 @@ def do_deploy(archive_path):
         return False
 
 
-archive_path = do_pack()
-
-
 def deploy():
     """Method that creates and distributes an archive to servers"""
+    archive_path = do_pack()
     if archive_path is None:
         return False
     return do_deploy(archive_path)
