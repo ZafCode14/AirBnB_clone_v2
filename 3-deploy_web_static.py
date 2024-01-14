@@ -38,15 +38,18 @@ def do_deploy(archive_path):
         run('rm -rf {}{}/web_static/'.format(path, date_time))
         run('rm -rf /data/web_static/current')
         run('ln -s {}{}/ /data/web_static/current'.format(path, date_time))
+        sudo('service nginx restart')
         print("New version deployed!")
         return True
     except Exception:
         return False
 
 
+archive_path = do_pack()
+
+
 def deploy():
     """Method that creates and distributes an archive to servers"""
-    archive_path = do_pack()
     if archive_path is None:
         return False
     return do_deploy(archive_path)
