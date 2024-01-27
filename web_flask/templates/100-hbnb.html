@@ -21,12 +21,12 @@
                     <h3>States</h3>
                     <h4>&nbsp;</h4>
                     <ul class="popover">
-                        {% for state in states %}
+                        {% for state in states|sort(attribute="name") %}
                         <li>
-                            <h2 class="state_name">{{ state.name }}</h2>
+                            <h2 class="state_name">{{ state.name|e }}</h2>
                             <ul>
-                            {% for city in state.cities %}
-                                <li class="city_name">{{ city.name }}</li>
+                            {% for city in state.cities|sort(attribute="name") %}
+                                <li class="city_name">{{ city.name|e }}</li>
                             {% endfor %}
                             </ul>
                         </li>
@@ -38,7 +38,7 @@
                     <h4>&nbsp;</h4>
                     <ul class="popover">
                         {% for amenity in amenities|sort(attribute="name") %}
-                        <li><h4 class="amenity_name">{{ amenity.name }}</h4></li>
+                        <li><h4 class="amenity_name">{{ amenity.name|e }}</h4></li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -49,24 +49,24 @@
                 <div class="articles">
                     {% for place in places|sort(attribute="name") %}
                     <article>
-                        <h2 class="place_name">{{ place.name }}</h2>
+                        <h2 class="place_name">{{ place.name|e }}</h2>
                         <div class="price_by_night"><h4>${{ place.price_by_night|safe }}</h4></div>
                         <div class="information">
                             <div class="max_guest">
                                 <div class="guest_icon"></div>
-                                <h4>{{ place.max_guest }}</h4>
+                                <h4>{{ place.max_guest|e }}</h4>
                             </div>
                             <div class="number_rooms">
                                 <div class="bed_icon"></div>
-                                <h4>{{ place.number_rooms }} Room</h4>
+                                <h4>{{ place.number_rooms|e }} Room</h4>
                             </div>
                             <div class="number_bathrooms">
                                 <div class="bath_icon"></div>
-                                <h4>{{ place.number_bathrooms }} Bathroom</h4>
+                                <h4>{{ place.number_bathrooms|e }} Bathroom</h4>
                             </div>
                         </div>
                         <div class="user">
-                            <h4 class="owner">Owner:</h4><h4>{{ place.user.first_name }} {{ place.user.last_name }}</h4>
+                            <h4 class="owner">Owner:</h4><h4>{{ place.user.first_name|e }} {{ place.user.last_name|e }}</h4>
                         </div>
                         <div class="description">
                             <h4>{{ place.description|safe }}</h4>
