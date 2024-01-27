@@ -18,6 +18,7 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             """Method for filesotorage cities"""
+            import models
             city_list = []
             for city in list(models.storage.all(City).values()):
                 if city.state_id == self.id:
