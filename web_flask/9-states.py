@@ -1,5 +1,5 @@
-"""Module with a flask script"""
 #!/usr/bin/python3
+"""Module with a flask script"""
 from flask import Flask, render_template
 from models import storage
 from models.state import State
@@ -13,11 +13,13 @@ def teardown_db(exception):
     """Method that closes storage"""
     storage.close()
 
+
 @app.route("/states", strict_slashes=False)
 def states():
     """Method that returns a template"""
     states = storage.all(State).values()
     return render_template('9-states.html', states=states, found=True)
+
 
 @app.route("/states/<id>", strict_slashes=False)
 def cities_by_states(id):
@@ -28,7 +30,8 @@ def cities_by_states(id):
     for state in states:
         if state.id == id:
             found = True
-            return render_template('9-states.html', state=state, cities=cities, found=found) 
+            return render_template(
+                    '9-states.html', state=state, cities=cities, found=found)
     if not found:
         return render_template('9-states.html', found=found)
 

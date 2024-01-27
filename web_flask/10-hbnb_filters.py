@@ -1,5 +1,5 @@
-"""Module with a falsk script"""
 #!/usr/bin/python3
+"""Module with a falsk script"""
 from flask import Flask, render_template
 from models import storage
 from models.state import State
@@ -13,12 +13,14 @@ def teardown_db(exception):
     """Module that closes storage"""
     storage.close()
 
+
 @app.route("/hbnb_filters", strict_slashes=False)
 def hbnb_filters():
     """Module that returns a template"""
     states = storage.all(State).values()
     amenities = storage.all(Amenity).values()
-    return render_template('10-hbnb_filters.html', states=states, amenities=amenities)
+    return render_template(
+            '10-hbnb_filters.html', states=states, amenities=amenities)
 
 
 if __name__ == '__main__':
