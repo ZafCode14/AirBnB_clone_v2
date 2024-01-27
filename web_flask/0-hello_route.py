@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """Module with flask script"""
 from flask import Flask
 
