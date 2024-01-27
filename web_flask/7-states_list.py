@@ -10,7 +10,8 @@ app = Flask(__name__)
 @app.teardown_appcontext
 def teardown_db(exception):
     """Method that closes storage"""
-    storage.close()
+    if storage is not None:
+        storage.close()
 
 
 @app.route("/states_list", strict_slashes=False)
